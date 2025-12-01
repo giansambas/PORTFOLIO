@@ -1,4 +1,4 @@
-// script.js — improved theme toggle with memory, safety, and smooth transition
+// script.js — final theme toggle with memory, safety, smooth transition, and ARIA
 (function () {
   const TOGGLE_ID = 'theme-toggle';
   const STORAGE_KEY = 'preferred-theme-dark';
@@ -10,24 +10,20 @@
 
   if (!btn || !body) return; // safe guard
 
-  // add decorative icon element inside the button (keeps visible label "Switch Theme")
-  // If the button already has an .icon child, don't add a duplicate.
+  // ensure decorative icon exists (keeps visible label text unchanged)
   if (!btn.querySelector('.icon')) {
     const icon = document.createElement('span');
     icon.className = 'icon';
     icon.setAttribute('aria-hidden', 'true');
-    // keep label text unchanged; icon is purely visual
     btn.insertBefore(icon, btn.firstChild);
   }
 
-  // set ARIA initial state helper
   function setAria(pressed) {
     btn.setAttribute('aria-pressed', String(pressed));
   }
 
-  // apply theme based on boolean (true => dark)
+  // apply theme (true = dark)
   function applyTheme(isDark, skipSave = false) {
-    // toggle class on body
     if (isDark) body.classList.add('dark');
     else body.classList.remove('dark');
 
@@ -37,12 +33,11 @@
       try {
         localStorage.setItem(STORAGE_KEY, isDark ? 'true' : 'false');
       } catch (e) {
-        // ignore storage errors (e.g. privacy mode)
+        // ignore storage errors
       }
     }
   }
 
-  // create a brief transition effect for a smoother color swap
   function withTransition(cb) {
     body.classList.add(TRANSITION_CLASS);
     window.clearTimeout(body._themeTimeout);
@@ -64,17 +59,19 @@
   const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   const initialIsDark = saved === 'true' ? true : (saved === 'false' ? false : prefersDark);
 
-  // apply initial theme (don't overwrite storage if none)
+  // apply initial theme and set ARIA
   applyTheme(initialIsDark, true);
 
-  // click handler toggles theme, stores choice, and shows a beautiful transition
+  // ensure button's aria and visual are correct on load
+  setAria(initialIsDark);
+
+  // click toggles theme with transition and small icon nudge
   btn.addEventListener('click', () => {
     const isDarkNow = body.classList.contains('dark');
     const toDark = !isDarkNow;
 
     withTransition(() => applyTheme(toDark));
 
-    // tiny micro-animation for icon (visual feedback)
     const icon = btn.querySelector('.icon');
     if (icon) {
       icon.style.transform = 'scale(0.86) translateY(1px)';
@@ -82,11 +79,11 @@
     }
   });
 
-  // also respond to system preference changes (only if user hasn't explicitly saved a choice)
+  // respond to system preference changes only if user hasn't saved a choice
   if (window.matchMedia) {
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
-    mq.addEventListener?.('change', (e) => {
-      // only auto-switch if user hasn't saved a choice
+    // use addEventListener if available, fallback to addListener for older browsers
+    const handler = (e) => {
       try {
         const hasSaved = localStorage.getItem(STORAGE_KEY) !== null;
         if (!hasSaved) {
@@ -95,6 +92,8 @@
       } catch (err) {
         // ignore
       }
-    });
+    };
+    if (mq.addEventListener) mq.addEventListener('change', handler);
+    else if (mq.addListener) mq.addListener(handler);
   }
 })();
