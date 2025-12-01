@@ -1,16 +1,8 @@
-/* ===============================
-   FINAL STYLE.CSS — CLEAN + UPDATED
-   Layout improved, theme button fixed
-   =============================== */
-
-/* ---------- VARIABLES ---------- */
 :root{
-  /* Light mode colors */
   --bg: #f5f5f5;
   --text: #333333;
   --card-bg: #ffffff;
 
-  /* Theme toggle button (light mode = black button) */
   --toggle-bg: #000000;
   --toggle-text: #ffffff;
 
@@ -22,7 +14,6 @@
   --font-stack: "Segoe UI", Roboto, Arial, sans-serif;
 }
 
-/* ---------- BASE RESET ---------- */
 *{ box-sizing: border-box; }
 html,body{ height:100%; margin:0; }
 
@@ -36,22 +27,19 @@ body{
   transition: background-color 320ms ease, color 320ms ease;
 }
 
-/* Smooth transition when toggling */
 .theme-transition{
   transition: background-color 420ms ease, color 420ms ease;
 }
 
-/* ---------- PAGE GRID ---------- */
 .page{
   width:100%;
   max-width:var(--max-width);
   display:grid;
-  grid-template-columns: 300px 1fr; /* sidebar + content */
+  grid-template-columns: 300px 1fr;
   gap:var(--gap);
   align-items:start;
 }
 
-/* ---------- SIDEBAR ---------- */
 .sidebar{
   background: rgba(0,0,0,0.03);
   padding:20px;
@@ -64,12 +52,10 @@ body{
   height:100%;
 }
 
-/* push footer to bottom */
 .sidebar-spacer{
   flex:1 1 auto;
 }
 
-/* Profile */
 .profile{
   display:flex;
   gap:12px;
@@ -90,7 +76,6 @@ body{
   font-weight:600;
 }
 
-/* ---------- THEME BUTTON ---------- */
 .header-controls{
   display:flex;
   align-items:center;
@@ -111,7 +96,6 @@ button#theme-toggle{
   transition: background-color 250ms ease, color 250ms ease, transform 150ms ease;
 }
 
-/* little circle icon */
 button#theme-toggle .icon{
   width:16px;
   height:16px;
@@ -128,14 +112,12 @@ button#theme-toggle:active{
   transform:translateY(1px);
 }
 
-/* ---------- CONTENT AREA ---------- */
 .content{
   display:flex;
   flex-direction:column;
   gap:var(--gap);
 }
 
-/* Cards */
 .card{
   background:var(--card-bg);
   padding:20px;
@@ -160,11 +142,9 @@ button#theme-toggle:active{
   line-height:1.6;
 }
 
-/* Achievements above Projects (already correct by order) */
 #achievements{ order:0; }
 #projects{ order:1; }
 
-/* ---------- PAGE FOOTER ---------- */
 .page-footer{
   width:100%;
   max-width:var(--max-width);
@@ -174,21 +154,18 @@ button#theme-toggle:active{
   font-size:0.9rem;
 }
 
-/* ---------- DARK MODE OVERRIDES ---------- */
 body.dark{
   --bg: #121212;
   --text: #f5f5f5;
   --card-bg: #1b1b1b;
 
-  /* White button in dark mode */
   --toggle-bg: #ffffff;
   --toggle-text: #000000;
 }
 
-/* ---------- RESPONSIVE MODE ---------- */
 @media (max-width:900px){
   .page{
-    grid-template-columns:1fr; /* stack */
+    grid-template-columns:1fr;
   }
 
   .sidebar{
@@ -215,7 +192,6 @@ body.dark{
   }
 }
 
-/* ---------- FINAL SAFETY OVERRIDES (remove old blue style) ---------- */
 button#theme-toggle{
   background-image:none !important;
   background: var(--toggle-bg) !important;
