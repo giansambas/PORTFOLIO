@@ -104,34 +104,64 @@ figure::after{
   align-items:center;
 }
 
-/* theme button styling */
+/* theme button styling (updated for white/black modes + better spacing) */
 button#theme-toggle{
-  background:linear-gradient(180deg, var(--accent), color-mix(in srgb, var(--accent) 80%, black 10%));
-  color:#fff;
-  border:0;
-  padding:10px 16px;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:600;
-  transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease;
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  box-shadow: 0 8px 20px rgba(3,102,214,0.12), inset 0 -2px 6px rgba(0,0,0,0.08);
+  background: var(--toggle-bg);
+  color: var(--toggle-text);
+  border: 0;
+  padding: 12px 20px; /* spaced better */
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 
+    background-color 250ms ease,
+    color 250ms ease,
+    transform 150ms ease,
+    box-shadow 150ms ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
 }
+
+/* small icon next to text */
 button#theme-toggle .icon{
-  width:18px;
-  height:18px;
-  border-radius:50%;
-  display:inline-block;
-  flex:0 0 18px;
-  background: linear-gradient(180deg,#fff8,#ffffff00);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
-  transition: transform .22s ease, background 260ms ease;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: currentColor; /* automatically becomes white or black */
+  opacity: 0.8;
+  transition: transform .22s ease, opacity .22s ease;
 }
-button#theme-toggle:focus{ outline:3px solid rgba(0,102,204,0.18); outline-offset:2px; }
-button#theme-toggle:active{ transform: translateY(1px); }
-button#theme-toggle:hover{ transform: translateY(-2px); }
+
+button#theme-toggle:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+
+button#theme-toggle:active{
+  transform: translateY(1px);
+}
+
+/* Light mode button → black */
+:root{
+  --toggle-bg: #ffffff;
+  --toggle-text: #000000;
+}
+
+/* Dark mode button → white */
+body.dark{
+  --toggle-bg: #ffffff;
+  --toggle-text: #000000;
+}
+
+/* OR if you want white button with black text in dark mode: */
+body.dark{
+  --toggle-bg: #ffffff;
+  --toggle-text: #000000;
+}
+
+/* If you ever want reversed (white text on black), tell me */
 
 /* main content area — sensible responsive grid */
 main{
