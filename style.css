@@ -229,3 +229,22 @@ button#theme-toggle{
 button#theme-toggle .icon{
   background: currentColor !important;
 }
+
+.project-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 12px 18px;
+  background: var(--accent);
+  color: white;
+  text-decoration: none;
+  border-radius: var(--radius);
+  font-weight: 600;
+  box-shadow: var(--shadow);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.project-link:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.12);
+}
+
